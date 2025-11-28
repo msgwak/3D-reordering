@@ -2,8 +2,8 @@
 
 ## Overview
 - Self-supervised task: slice 3D volumes (e.g., CT) into fixed-length sequences, shuffle their order, and train the model to recover the original ordering.
-- Uses an encoder–ConvS5 (Conv-SSM)–decoder stack. ConvS5 in `src/models/sequence_models/noVQ/convS5.py` stabilizes spatio-temporal frequency responses for long contexts.
-- Rather than class labels, the model predicts a one-hot permutation matrix describing the correct ordering, which encourages stronger representations for downstream defect detection and classification.
+- Uses an encoder–ConvS5 (Conv-SSM)–decoder stack. ConvS5 in `src/models/sequence_models/noVQ/convS5.py` extracts spatiotemporal representations for long contexts.
+- Rather than class labels, the model predicts a one-hot permutation matrix describing the correct ordering, which encourages stronger representations for downstream tasks (e.g., defect detection, classification).
 
 ## Directory Layout
 - `configs/`: Dataset-specific hyperparameters (see `configs/CT/ct_convS5_novq_slice.yaml`).
@@ -26,28 +26,12 @@
 
 ## How to Run
 ```bash
-cd /root/base/KITECH/3D-reordering
+cd ~/3D-reordering
 chmod +x run_ct.sh
 ./run_ct.sh
 ```
 - `run_ct.sh` wraps `uv run -m scripts.train` with the CT configuration.
 - Key flags:
-  - `-d`: Raw CT data directory (e.g., `~/base/DATA/KITECH/BORGWARNER/`).
+  - `-d`: Raw CT data directory
   - `-o`: Output directory for checkpoints, logs, and visualizations.
   - `-c`: Config file path.
-
-## Tuning Tips
-- `slice_interval`, `slice_seq_len`: Adjust slice density and temporal coverage.
-- `encoder/decoder.depths`, `d_model`: Control spatial resolution and channel width.
-- `seq_model.n_layers`, `ssm.ssm_size`: Scale the temporal capacity of ConvS5.
-- `open_loop_ctx`: Choose the autoregressive evaluation horizon.
-
-## Inference & Metrics
-- `scripts.train` periodically saves checkpoints and qualitative samples under `results/<exp_name>` while evaluating with `open_loop_ctx_*` settings.
-- Beyond permutation accuracy, `src/metrics.py` enables FVD and related temporal quality metrics.
-
-## Additional Notes
-- To extend to other 3D modalities (industrial CT, MRI, etc.), mirror the folder structure expected by `data_path`.
-- For any additional implementation details or reusable ConvSSM blocks, refer to the upstream ConvS5 reference in `/root/base/KITECH/ConvS5-KITECH`, especially `src/models/sequence_models/noVQ/convS5.py`.
-- Use `configs/Moving-MNIST` or other provided baselines for quick ablations on 2D sequence datasets.
-
