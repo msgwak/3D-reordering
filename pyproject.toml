@@ -1,0 +1,39 @@
+[project]
+name = "convssm-gms"
+version = "0.1.0"
+requires-python = ">=3.11,<3.12"
+
+dependencies = [
+  "numpy==1.26.4",
+  "scipy==1.15.3",
+  "matplotlib==3.10.3",
+  "jax[cuda12]==0.4.28",
+  "jax-cuda12-pjrt==0.4.28",
+  "jax-cuda12-plugin==0.4.28",
+  "nvidia-cuda-runtime-cu12==12.8.*", # 12.4.8
+  "nvidia-cuda-nvrtc-cu12==12.8.*", # 12.4.8
+  "nvidia-nvjitlink-cu12==12.8.*", # 12.4.8
+  "nvidia-cublas-cu12==12.8.*", # 12.4.8
+  "nvidia-cusolver-cu12==11.6.*",
+  "nvidia-cusparse-cu12==12.3.*",
+  "nvidia-cudnn-cu12==8.9.*",
+  "nvidia-nccl-cu12==2.20.*",
+  "nvidia-cuda-nvcc-cu12==12.8.*",
+  "flax==0.8.4",
+  "optax==0.2.5",
+  "orbax-checkpoint==0.5.0",
+  "tensorboard==2.16.*",
+  "tensorflow-cpu==2.16.*",
+  "tensorflow-datasets==4.8.3",
+  "tensorflow-gan==2.1.0",
+  "tensorflow-hub==0.13.0",
+  "tensorflow-probability==0.19.0",
+  "protobuf==3.20.3",
+  "etils==1.13.0",
+  "imageio==2.37.0",
+  "moviepy==1.0.3",
+  "av==10.0.0",
+  "wandb==0.18.0",
+  "gcsfs==2022.7.1",
+  "lpips_jax==0.1.0",
+]
